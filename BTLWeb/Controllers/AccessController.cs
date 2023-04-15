@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BTLWeb.Models;
+using System.ComponentModel.DataAnnotations;
+using BTLWeb.Constants;
 
 namespace BTLWeb.Controllers
 {
@@ -22,7 +24,7 @@ namespace BTLWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(TUser user)
         {
-            if (HttpContext.Session.GetString("Username")==null)
+            if (HttpContext.Session.GetString("Username") == null)
             {
                 /*var f_password = GetMD5(password);*/
                 var data = db.TUsers.Where(s => s.Username.Equals(user.Username) && s.Password.Equals(user.Password)).FirstOrDefault();
@@ -63,10 +65,14 @@ namespace BTLWeb.Controllers
                 var check = db.TUsers.FirstOrDefault(s => s.Username == user.Username);
                 if (check == null)
                 {
-                    user.LoaiUser = 1;
-                    db.TUsers.Add(user);
-                    db.SaveChanges();
-                    return RedirectToAction("Login", "Access");
+                    bool kt = SendMail.SendEmail(user.Username, "Confirm your account", "Please confirm your account...", null);
+                    if (kt)
+                    {
+                        user.LoaiUser = 1;
+                        db.TUsers.Add(user);
+                        db.SaveChanges();
+                        return RedirectToAction("Login", "Access");
+                    }
                 }
                 else
                 {
