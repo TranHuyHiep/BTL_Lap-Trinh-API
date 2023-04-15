@@ -8,6 +8,6 @@ namespace BTLWeb.Constants
         public const string hostEmail = "smtp.gmail.com";
         public const int portEmail = 587;
         public const string emailSender = "hiptrangpt@gmail.com";
-        public const string passwordSenderr = "aqhkglbscjwepsqx";
+        public const string passwordSenderr = "qiwsxspjamjelrcb";
     }
 }

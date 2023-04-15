@@ -11555,23 +11555,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HT\\.nuget\\packages\\": {},
-    "E:\\other\\share Visual Studio 2022\\NuGetPackages": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "D:\\Install\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\utc_dai_cuong\\nam3\\Nam3_KyII\\THH\\Lap_trinh_su_dung_api\\BTL\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
+      "projectUniqueName": "E:\\UTC\\Nam3\\Ky2\\THH\\Lap_trinh_Api\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
       "projectName": "BTLWeb",
-      "projectPath": "E:\\utc_dai_cuong\\nam3\\Nam3_KyII\\THH\\Lap_trinh_su_dung_api\\BTL\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
-      "packagesPath": "C:\\Users\\HT\\.nuget\\packages\\",
-      "outputPath": "E:\\utc_dai_cuong\\nam3\\Nam3_KyII\\THH\\Lap_trinh_su_dung_api\\BTL\\BTL_Lap-Trinh-API\\BTLWeb\\obj\\",
+      "projectPath": "E:\\UTC\\Nam3\\Ky2\\THH\\Lap_trinh_Api\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "E:\\UTC\\Nam3\\Ky2\\THH\\Lap_trinh_Api\\BTL_Lap-Trinh-API\\BTLWeb\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "E:\\other\\share Visual Studio 2022\\NuGetPackages"
+        "D:\\Install\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\HT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -11653,7 +11653,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.408\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   },
