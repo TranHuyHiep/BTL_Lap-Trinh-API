@@ -22,7 +22,7 @@ namespace BTLWeb.Constants
                     }
                     
                     NetworkCredential credential = new NetworkCredential(CommonConstants.emailSender, CommonConstants.passwordSenderr);
-                    client.UseDefaultCredentials = true;
+                    client.UseDefaultCredentials = false;
                     client.Credentials = credential;
                     client.Send(msg);
 
