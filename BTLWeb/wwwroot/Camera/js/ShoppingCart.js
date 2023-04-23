@@ -165,13 +165,15 @@ function btnCheckout() {
 }
 
 function confirmCheckout() {
-
+    var select = document.getElementById("method");
+    var selectedOption = parseInt(select.value); // Chuyển giá trị thành số nguyên
+    
     var tongtien = $('#sumAllMoney').text();
     var note = $('#note').val()
 
     var hoaDonBan = {
         TongTienHD: tongtien,
-        PhuongThucThanhToan: 0,
+        PhuongThucThanhToan: selectedOption,
         GhiChu: note,
         TrangThai: 0,
     }
@@ -181,12 +183,11 @@ function confirmCheckout() {
     var phone = $('#phone').val()
     var address = $('#address').val()
 
-
     var _khachhang = {
         TenKhachHang: yourname,
         NgaySinh: new Date(birthDay.split("/").reverse().join("-")),
         SoDienThoai: phone,
-        DiaChi: address
+        DiaChi: address,
     }
 
     $.ajax({

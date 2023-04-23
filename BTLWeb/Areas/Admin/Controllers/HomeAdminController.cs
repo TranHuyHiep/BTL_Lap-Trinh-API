@@ -32,6 +32,16 @@ namespace WebProject02.Areas.Admin.Controllers
             PagedList<TDanhMucSp> pageList = new PagedList<TDanhMucSp>(lstSanPham, pageNumber, pageSize);
             return View(pageList);
         }
+
+        [Route("XacNhanDonHang")]
+        [HttpGet]
+        public IActionResult XacNhanDonHang(String maSanPham)
+        {
+
+            return RedirectToAction("DanhMucSanPham");
+        }
+
+
         [Route("DanhMucHoaDon")]
         public IActionResult DanhMucHoaDon(int? page)
         {

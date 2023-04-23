@@ -66,9 +66,9 @@
                     @Html.DisplayFor(modelItem => item.TongTienHd)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-mahoadon="@item.MaHoaDon">Edit</a> |
-                    <a asp-action="XemChiTietHD" asp-route-mahoadon="@item.MaHoaDon">Details</a> |
-                    <a asp-action="Delete" asp-route-mahoadon="@item.MaHoaDon">Delete</a>
+                    <a asp-action="XacNhanDonHang" asp-route-mahoadon="@item.MaHoaDon">Xác nhận</a> |
+                    <a asp-action="XemChiTietHD" asp-route-mahoadon="@item.MaHoaDon">Chi tiết</a> |
+                    <a asp-action="Delete" asp-route-mahoadon="@item.MaHoaDon">Xoá</a>
                 </td>
             </tr>
         }

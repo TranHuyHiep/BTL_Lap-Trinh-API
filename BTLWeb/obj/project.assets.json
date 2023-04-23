@@ -11697,11 +11697,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\dowload\\Gửi Hiệp\\BTLWeb\\BTLWeb.csproj",
+      "projectUniqueName": "E:\\UTC\\Nam3\\Ky2\\THH\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
       "projectName": "BTLWeb",
-      "projectPath": "F:\\dowload\\Gửi Hiệp\\BTLWeb\\BTLWeb.csproj",
+      "projectPath": "E:\\UTC\\Nam3\\Ky2\\THH\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "F:\\dowload\\Gửi Hiệp\\BTLWeb\\obj\\",
+      "outputPath": "E:\\UTC\\Nam3\\Ky2\\THH\\BTL_Lap-Trinh-API\\BTLWeb\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Install\\Shared\\NuGetPackages"
