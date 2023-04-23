@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Dc4KxjtVpZ6hbZYiJutK/7YjyycsGRcKdqZdymRGToNDspKQf06L7BmKNyEhwiulOLnQ5dFelG/3ApPNUgd4hg==",
+  "dgSpecHash": "eqbDyl9l5mSToXaXHXVswgg7fg2FI/jQHJ9ByaFToZWnpBrK944jn5F7lHm3p1cuAfIC/vlOLhzHRvtuczkxCg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ADMIN\\OneDrive\\Máy tính\\BTL-LapTrinhWeb-master\\BTL-LapTrinhWeb-master\\BTLWeb\\BTLWeb.csproj",
+  "projectFilePath": "F:\\WebBack\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "ChiTietSanPham";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var listComment = (List<BTLWeb.Models.Comment>)ViewBag.ListComment;
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 }
 
 <!-- Shop Detail Start -->
@@ -138,20 +140,32 @@
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4 class="mb-4">1 review for "Product Name"</h4>
-                                <div class="media mb-4">
-                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                    <div class="media-body">
-                                        <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                        <div class="text-primary mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <i class="far fa-star"></i>
+                                <div id='div_allcomment''>
+                                    <h4 class="mb-4">1 review for "Product Name"</h4>
+                                    @foreach(var item in listComment)
+                                    {     
+                                     <div class="media mb-4">
+                                        @*<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">*@
+                                        <div class="media-body">
+                                            <h6>@item.FullName<small> - <i>@item.CommentDate</i></small></h6>
+                                            <div class="text-primary mb-2">
+                                                @for( int i = 1; i<= item.ParentID; i++)
+                                                {
+                                                    <i class="fas fa-star"></i>
+                                                }
+                                                @for (int i = 1; i <= 5 -item.ParentID; i++)
+                                                {
+                                                    <i class="far fa-star"></i>
+                                                }
+                                              
+                                             
+                                            </div>
+                                            <p>@item.CommentMsg</p>
                                         </div>
-                                        <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
-                                    </div>
+                                                
+                                        </div>
+                                    }
+                                   
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -160,30 +174,31 @@
                                 <div class="d-flex my-3">
                                     <p class="mb-0 mr-2">Your Rating * :</p>
                                     <div class="text-primary">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
+                                        <i id="ratingStar" class="ratingStar far fa-star" data-value="1"></i>
+                                        <i id="ratingStar" class="ratingStar far fa-star" data-value="2" ></i>
+                                        <i id="ratingStar" class="ratingStar far fa-star" data-value="3"></i>
+                                        <i id="ratingStar" class="ratingStar far fa-star" data-value="4"></i>
+                                        <i id="ratingStar" class="ratingStar far fa-star" data-value="5"></i>
                                     </div>
+                                    <input type="hidden" name="rating" id="ratingValues" />
                                 </div>
-                                <form>
+                                <div>
                                     <div class="form-group">
                                         <label for="message">Your Review *</label>
-                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                        <textarea id="txtCommentNew" cols="30" rows="5" class="form-control" value=""></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Your Name *</label>
-                                        <input type="text" class="form-control" id="name">
+                                        <input  type="text" class="form-control" id="name" value="">
                                     </div>
-                                    <div class="form-group">
+                                   @* <div class="form-group">
                                         <label for="email">Your Email *</label>
                                         <input type="email" class="form-control" id="email">
-                                    </div>
+                                    </div>*@
                                     <div class="form-group mb-0">
-                                        <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                        <input type="button" name="signup" id="signup" class="form-submit" value="Register" />
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -192,4 +207,49 @@
         </div>
     </div>
 </div>
+
+<script defer>
+    $(".ratingStar").hover(function () {
+        $(".ratingStar").addClass("far").removeClass("fas");
+
+        $(this).addClass("fas").removeClass("far");
+        $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+    });
+    $(".ratingStar").click(function () {
+        debugger;
+        var startValue = $(this).attr("data-value");
+
+        $("#ratingValues").val(startValue);
+       
+
+    });
+    document.getElementById("signup").onclick = function () {
+        console.log("clickkkkkkkkk")
+        let data = {
+            id: 1,
+            commentMsg: $("#txtCommentNew").val(),
+            commentDate: new Date().toISOString().slice(0, 10),
+            productID: "@Model.MaSp",
+            userId: 1,
+            parentID: $("#ratingValues").val(),
+            fullname: $("#name").val(),
+        }
+        $.ajax({
+            url: "https://localhost:44368/api/v1/addcoment",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            async: true,
+            success: function (data) {
+                console.log(data)
+                location.reload()
+            },
+            error: function () {
+                $("#loader_container").css("display", "none");
+                alert("Cannot get data");
+            }
+        })
+    }
+</script>
+
 <!-- Shop Detail End -->

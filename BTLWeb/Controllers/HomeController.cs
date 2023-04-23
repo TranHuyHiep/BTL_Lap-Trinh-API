@@ -1,9 +1,17 @@
 ﻿using Azure;
+using BTLWeb.Constants;
 using BTLWeb.Models;
+using BTLWeb.Models.Dao;
+using BTLWeb.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.SqlServer.Server;
+using Nancy.Session;
+using Newtonsoft.Json.Converters;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Security.Cryptography;
 using X.PagedList;
 
 namespace BTLWeb.Controllers
@@ -87,9 +95,13 @@ namespace BTLWeb.Controllers
         {
             var sanpham = db.TDanhMucSps.SingleOrDefault(x => x.MaSp== maSp);
             var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
+
+            ViewBag.ListComment = new CommentDao().ListComment(0,maSp);
             ViewBag.anhSanPham = anhSanPham;
             return View(sanpham);
         }
+
+        
         public IActionResult Privacy()
         {
             return View();
@@ -100,5 +112,23 @@ namespace BTLWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        [Route("api/v1/addcoment")]
+        public IActionResult AddNewComment([FromBody] dynamic data)
+        {   
+            var format = "yyyy-MM-dd"; // your datetime format
+            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format };
+            var cmt = Newtonsoft.Json.JsonConvert.DeserializeObject<Comment>(data.ToString(), dateTimeConverter);
+            var id = db.TComments.Select(c => c.ID).Max();
+            id = id == null ? 1 : id +1;
+            cmt.ID = id;
+            db.TComments.Add(cmt);
+            db.SaveChanges();
+            return Ok("okkkkk");
+        }
+
+
+
     }
 }

@@ -17,12 +17,12 @@ namespace BTLWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-        }
+    }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(TUser user)
         {
-            if (HttpContext.Session.GetString("Username")==null)
+            if (HttpContext.Session.GetString("Username") == null)
             {
                 /*var f_password = GetMD5(password);*/
                 var data = db.TUsers.Where(s => s.Username.Equals(user.Username) && s.Password.Equals(user.Password)).FirstOrDefault();

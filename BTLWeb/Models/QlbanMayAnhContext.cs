@@ -37,9 +37,11 @@ public partial class QlbanMayAnhContext : DbContext
 
     public virtual DbSet<TUser> TUsers { get; set; }
 
+    public virtual DbSet<Comment> TComments { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=MSI\\THEHAO;Initial Catalog=QLBanMayAnh;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-BOKJFF6;Initial Catalog=QLBanMayAnh;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -321,6 +323,40 @@ public partial class QlbanMayAnhContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("password");
+        });
+        modelBuilder.Entity<Comment>(entity =>
+        {
+            entity.HasKey(e => e.ID);
+
+            entity.ToTable("tComment");
+
+            entity.Property(e => e.ID)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("ID");
+            entity.Property(e => e.CommentMsg)
+                .HasMaxLength(256)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("CommentMsg");
+            entity.Property(e => e.CommentDate).HasColumnType("date");
+            entity.Property(e => e.ProductID)
+               .HasMaxLength(256)
+               .IsUnicode(false)
+               .IsFixedLength()
+               .HasColumnName("ProductID");
+            entity.Property(e => e.UserId)
+               .HasMaxLength(256)
+               .IsUnicode(false)
+               .IsFixedLength()
+               .HasColumnName("UserId");
+           
+            entity.Property(e => e.ParentID)
+               .HasMaxLength(256)
+               .IsUnicode(false)
+               .IsFixedLength()
+               .HasColumnName("ParentID");
         });
 
         OnModelCreatingPartial(modelBuilder);

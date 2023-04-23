@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\OneDrive\\Máy tính\\BTL-LapTrinhWeb-master\\BTL-LapTrinhWeb-master\\BTLWeb\\BTLWeb.csproj": {}
+    "F:\\WebBack\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\OneDrive\\Máy tính\\BTL-LapTrinhWeb-master\\BTL-LapTrinhWeb-master\\BTLWeb\\BTLWeb.csproj": {
+    "F:\\WebBack\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\OneDrive\\Máy tính\\BTL-LapTrinhWeb-master\\BTL-LapTrinhWeb-master\\BTLWeb\\BTLWeb.csproj",
+        "projectUniqueName": "F:\\WebBack\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
         "projectName": "BTLWeb",
-        "projectPath": "C:\\Users\\ADMIN\\OneDrive\\Máy tính\\BTL-LapTrinhWeb-master\\BTL-LapTrinhWeb-master\\BTLWeb\\BTLWeb.csproj",
+        "projectPath": "F:\\WebBack\\BTL_Lap-Trinh-API\\BTLWeb\\BTLWeb.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\OneDrive\\Máy tính\\BTL-LapTrinhWeb-master\\BTL-LapTrinhWeb-master\\BTLWeb\\obj\\",
+        "outputPath": "F:\\WebBack\\BTL_Lap-Trinh-API\\BTLWeb\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Visual studio 2022\\VS studio tools\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -99,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
