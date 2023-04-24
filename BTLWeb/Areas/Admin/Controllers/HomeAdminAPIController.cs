@@ -142,15 +142,21 @@ namespace BTLWeb.Areas.Admin.Controllers
         }
 
         [HttpGet("ThongKe")]
-        public JsonResult ThongKe([FromQuery] int? thang, [FromQuery] int? nam)
+        public JsonResult ThongKe()
         {
-            List<THoaDonBan> lstHoaDon = db.THoaDonBans.FromSqlRaw("SELECT * FROM THoaDonBan WHERE YEAR(CONVERT(datetime, NgayHoaDon, 101)) = {0} and month(CONVERT(datetime, NgayHoaDon, 101)) = {1}", nam, thang).ToList();
-            var sum = 0;
-            foreach (var item in lstHoaDon)
+            List<int> ans = new List<int>();
+            int nam = 2023;
+            for (int thang = 1; thang <= 12; thang++)
             {
-                sum += (int)item.TongTienHd;
+                List<THoaDonBan> lstHoaDon = db.THoaDonBans.FromSqlRaw("SELECT * FROM THoaDonBan WHERE YEAR(CONVERT(datetime, NgayHoaDon, 101)) = {0} and month(CONVERT(datetime, NgayHoaDon, 101)) = {1}", nam, thang).ToList();
+                var sum = 0;
+                foreach (var item in lstHoaDon)
+                {
+                    sum += (int)item.TongTienHd;
+                }
+                ans.Add(sum);
             }
-            return new JsonResult(sum);
+            return new JsonResult(ans);
         }
     }
 }
