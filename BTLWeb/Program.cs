@@ -6,6 +6,7 @@ using System;
 using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,11 +19,9 @@ builder.Services.AddScoped<IELoaiSpRepository, LoaiSpRepository>();
 builder.Services.AddScoped<IHangSxRepository, HangSxRepository>();
 builder.Services.AddSession(options =>
 {
-    options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

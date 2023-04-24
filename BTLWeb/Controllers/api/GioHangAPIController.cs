@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace BTLWeb.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class GioHangAPIController : ControllerBase
     {
         QlbanMayAnhContext db = new QlbanMayAnhContext();
         HoaDonBanService hoaDonBanService = new HoaDonBanService();
          
-        [HttpGet]
+        [HttpGet("")]
         public ActionResult<List<ShoppingCartViewModel>> Get()
         {
             var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
@@ -28,8 +28,8 @@ namespace BTLWeb.Controllers
             return Ok(cart);
         }
 
-        [HttpPost("{productId}")]
-        public IActionResult Add(string productId)
+        [HttpPost("add/{productId}")]
+        public JsonResult Add(string productId)
         {
             var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
             if (cart == null)
@@ -58,10 +58,7 @@ namespace BTLWeb.Controllers
 
             HttpContext.Session.Set<List<ShoppingCartViewModel>>(CommonConstants.SessionCart, cart);
 
-            return Ok(new
-            {
-                status = true
-            });
+            return new JsonResult("true");
         }
 
         [HttpPut]
@@ -96,8 +93,7 @@ namespace BTLWeb.Controllers
             });
         }
 
-        [HttpGet]
-        [Route("api/check-khach-hang")]
+        [HttpGet("api/check-khach-hang")]
         public IActionResult CheckKhachHang()
         {
             var username = HttpContext.Session.GetString("Username");
@@ -112,8 +108,7 @@ namespace BTLWeb.Controllers
             return Ok(new { status = false });
         }
 
-        [HttpPost]
-        [Route("api/create-order-no-create-khach-hang")]
+        [HttpPost("api/create-order-no-create-khach-hang")]
         public IActionResult CreateOrderNoCreateKhachHang(string orderViewModel)
         {
             var username = HttpContext.Session.GetString("Username");

@@ -19,7 +19,7 @@ namespace BTLWeb.Controllers
         [HttpGet]
         public JsonResult GetAllBrand()
         {
-            var lst = db.TDanhMucSps.ToList();
+            var lst = db.THangSxes.ToList();
             return new JsonResult(lst);
         }
     }
