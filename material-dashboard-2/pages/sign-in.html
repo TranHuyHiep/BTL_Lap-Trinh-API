@@ -223,15 +223,8 @@
         dataType: "json",
         success: function (response) {
           if (response == "user") {
-            $.ajax({
-              url: "https://localhost:44368/api/AccessAPI/login",
-              type: "GET",
-              success: function (result) {
-                // Xử lý kết quả trả về
-                console.log(result);
-              }
-            });
-            // window.location.href = "../../multishop-1.0.0/index.html"
+            localStorage.setItem("username", JSON.stringify(user.username))
+            window.location.href = "../../multishop-1.0.0/index.html"
           }
         },
         error: function (error) {

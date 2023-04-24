@@ -24,6 +24,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/StyleSheet.css" rel="stylesheet">
 </head>
 
 <body>
@@ -208,47 +209,42 @@
                 <table class="table table-light table-borderless table-hover text-center mb-0">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Products</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Remove</th>
+                            <th>STT</th>
+                            <th>Tên SP</th>
+                            <th>Hình ảnh</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle" id="cart">
-                        
+
                     </tbody>
                 </table>
+                <button class="btn btn-success" style="float:right" onclick="btnContinue()">Tiếp tục mua</button>
+                <button class="btn btn-danger" style="float:right" onclick="btnDeleteAll(true)">Xoá giỏ hàng</button>
             </div>
             <div class="col-lg-4">
-                <form class="mb-30" action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary">Apply Coupon</button>
-                        </div>
-                    </div>
-                </form>
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart
-                        Summary</span></h5>
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Giỏ
+                        hàng</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom pb-2">
                         <div class="d-flex justify-content-between mb-3">
-                            <h6>Subtotal</h6>
-                            <h6>$150</h6>
+                            <h6>Tổng</h6>
+                            <h6 id="sumMoney">0</h6>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">$10</h6>
+                            <h6 class="font-weight-medium">Phí vận chuyển</h6>
+                            <h6 class="font-weight-medium">10.000</h6>
                         </div>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
-                            <h5>Total</h5>
-                            <h5>$160</h5>
+                            <h5>Tổng tiền</h5>
+                            <h5 id="sumAllMoney">10.000</h5>
                         </div>
-                        <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To
-                            Checkout</button>
+                        <button class="btn btn-block btn-primary font-weight-bold my-3 py-3"
+                            onclick="btnCheckout()">Thanh toán</button>
                     </div>
                 </div>
             </div>
@@ -333,6 +329,66 @@
         </div>
     </div>
     <!-- Footer End -->
+    <div id="success_tic" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <a class="close" href="#" data-dismiss="modal">&times;</a>
+                <div class="page-body">
+                    <div class="head">
+                        <h3 style="margin-top:5px;" id="noiDung"></h3>
+                    </div>
+
+                    <h1 style="text-align:center;">
+                        <div class="checkmark-circle">
+                            <div class="background"></div>
+                            <div class="checkmark draw"></div>
+                        </div>
+                        <h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="bg-light p-30 mb-5">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Your name</label>
+                            <input class="form-control" type="text" placeholder="Hiep Tran" id="yourName">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Birthday</label>
+                            <input class="form-control" type="date" placeholder="07/10/2002" id="birthDay">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Phone number</label>
+                            <input class="form-control" type="text" placeholder="09123456789" id="phone">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Address</label>
+                            <input class="form-control" type="text" placeholder="123 Street" id="address">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Note</label>
+                            <input class="form-control" type="text" placeholder="sang xin min" id="note">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Payment Methods</label>
+                            <select class="custom-select" id="method">
+                                <option selected value="0">Ship code</option>
+                                <option value="1">Banking</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-info btn-lg" onclick="confirmCheckout()">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Back to Top -->
@@ -352,48 +408,225 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-        $.ajax({
-            url: "https://localhost:44368/api/GioHangAPI",
-            type: "GET",
-            success: function (result) {
-                // Xử lý kết quả trả về
-                console.log(result);
-                var menu = $("#cart");
-                var str = '';
-                $.each(result, function (index, item) {
-                    str += 
-                        `<tr>
-                            <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"></td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text"
-                                        class="form-control form-control-sm bg-secondary border-0 text-center"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i
-                                        class="fa fa-times"></i></button></td>
-                        </tr>`;
-                });
-                menu.html(str);
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                // Xử lý lỗi
-                console.log(textStatus + ": " + errorThrown);
+        loadData()
+
+        function loadData() {
+            var result = localStorage.getItem("cart")
+            if (result == null) {
+                result = []
+            } else {
+                result = JSON.parse(result)
             }
+            var menu = $("#cart");
+            var str = '';
+            for (let i = 0; i < result.length; i++) {
+                let money = result[i].product.giaLonNhat * result[i].quantity;
+                str +=
+                    `<tr>
+                    <td class="stt"">${i + 1}</td>
+                    <td class="align-middle">${result[i].product.tenSp}</td>
+                    <td class="align-middle"><img src="img/ImageCamera/${result[i].product.anhDaiDien}" alt="${result[i].product.anhDaiDien}" style="width: 50px;"></td>
+                    <td class="align-middle price">${result[i].product.giaLonNhat}</td>
+                    <td class="align-middle">
+                        <div class="input-group quantity mx-auto" style="width: 100px;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-primary btn-minus">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <input type="text"
+                                class="form-control form-control-sm bg-secondary border-0 text-center"
+                                value="${result[i].quantity}">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-primary btn-plus">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="align-middle numPrice" id="${i}">${money}</td>
+                    <td class="align-middle"><button class="btn btn-sm btn-danger"><i
+                                class="fa fa-times"></i></button></td>
+                </tr>`;
+            }
+            menu.html(str);
+        }
+
+        $('.quantity button').on('click', function () {
+            var result = localStorage.getItem("cart")
+            if (result == null) {
+                result = []
+            } else {
+                result = JSON.parse(result)
+            }
+            var button = $(this);
+            var oldValue = button.parent().parent().find('input').val();
+            if (button.hasClass('btn-plus')) {
+                var newVal = parseFloat(oldValue) + 1;
+            } else {
+                if (oldValue > 0) {
+                    var newVal = parseFloat(oldValue) - 1;
+                } else {
+                    newVal = 0;
+                }
+            }
+            button.parent().parent().find('input').val(newVal);
+            var parent = $(this).closest("tr");
+            // Tìm đến phần tử có class là "numPrice" trong phần tử cha
+            var numPrice = parent.find(".numPrice");
+            // Thay đổi giá trị của phần tử "numPrice"
+            var price = parent.find(".price").text();
+            var id = parent.find(".stt").text();
+            id = parseInt(id) - 1;
+            result[id].quantity = newVal;
+            const num = parseFloat(price.replace(',', '.'));
+            numPrice.text(newVal * 1 * num);
+
+            localStorage.setItem("cart", JSON.stringify(result));
+            updateSumMoney()
         });
+        updateSumMoney()
+
+        function formattedNumber(money) {
+            return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function updateSumMoney() {
+            let sum = 0
+            let result = JSON.parse(localStorage.getItem("cart"));
+            result.forEach(function (item) {
+                var money = item.product.giaLonNhat * item.quantity;
+                sum += money;
+            })
+            $('#sumMoney').html(sum)
+            $('#sumAllMoney').html(sum + 10000)
+        }
+
+        function btnDeleteAll(check) {
+            var result = localStorage.getItem("cart")
+            if (result == null) {
+                result = []
+            } else {
+                result = JSON.parse(result)
+            }
+            if(result == 0) return;
+
+            localStorage.setItem("cart", JSON.stringify([]));
+            if (check == true) {
+                $('#noiDung').html("Xoá thành công!");
+                $('#success_tic').modal('show');
+            }
+            loadData()
+        }
+
+        function btnContinue() {
+            window.location.href = "index.html";
+        }
+
+        function btnCheckout() {
+            var result = localStorage.getItem("cart")
+            if (result == null) {
+                result = []
+                return
+            } else {
+                result = JSON.parse(result)
+            }
+            if(result.length == 0) {
+                return;
+            }
+            $.ajax({
+                url: 'https://localhost:44368/shoppingcart/CheckKhachHang',
+                type: 'Get',
+                dataType: 'json',
+                data: {
+                    username: JSON.parse(localStorage.getItem("username")),
+                },
+                success: function (res) {
+                    if (res == true) {
+                        var tongtien = $('#sumAllMoney').text();
+                        var note = $('#note').val()
+
+                        var hoaDonBan = {
+                            TongTienHD: tongtien,
+                            PhuongThucThanhToan: 0,
+                            GhiChu: note,
+                            TrangThai: 0,
+                        }
+                        $.ajax({
+                            url: 'https://localhost:44368/shoppingcart/CreateOrderNoCreateKhachHang',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                orderViewModel: JSON.stringify(hoaDonBan),
+                                cartLocal: JSON.stringify(JSON.parse(localStorage.getItem("cart"))),
+                                username: JSON.parse(localStorage.getItem("username")),
+                            },
+                            success: function (res) {
+                                $('#noiDung').html("Hoá đơn đã được ghi nhận");
+                                $('#success_tic').modal('show');
+                                btnDeleteAll(false);
+                            }
+                        })
+                    } else {
+                        $('.bd-example-modal-lg').modal('show');
+                    }
+                }
+            })
+        }
+
+        function confirmCheckout() {
+            var select = document.getElementById("method");
+            var selectedOption = parseInt(select.value); // Chuyển giá trị thành số nguyên
+
+            var tongtien = $('#sumAllMoney').text();
+            var note = $('#note').val()
+
+            var hoaDonBan = {
+                TongTienHD: tongtien,
+                PhuongThucThanhToan: selectedOption,
+                GhiChu: note,
+                TrangThai: 0,
+            }
+
+            var yourname = $('#yourname').val()
+            var birthDay = $('#birthDay').val()
+            var phone = $('#phone').val()
+            var address = $('#address').val()
+
+            var _khachhang = {
+                TenKhachHang: yourname,
+                NgaySinh: new Date(birthDay.split("/").reverse().join("-")),
+                SoDienThoai: phone,
+                DiaChi: address,
+            }
+            console.log(hoaDonBan);
+            console.log(JSON.parse(localStorage.getItem("cart")));
+            console.log(JSON.parse(localStorage.getItem("username")));
+            $.ajax({
+                url: 'https://localhost:44368/Shoppingcart/CreateOrder',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    orderViewModel: JSON.stringify(hoaDonBan),
+                    khachHang: JSON.stringify(_khachhang),
+                    cartLocal: JSON.stringify(JSON.parse(localStorage.getItem("cart"))),
+                    username: localStorage.getItem("username")
+                },
+                success: function (res) {
+                    if (res == true) {
+                        $('.bd-example-modal-lg').modal('hide');
+                        $('#noiDung').html("Mua hàng thành công");
+                        $('#success_tic').modal('show');
+                        btnDeleteAll(false);
+                    } else {
+                        alert("Bạn chưa có sản phẩm nào trong giỏ hàng!")
+                    }
+                }
+            })
+        }
+
+
+
     </script>
 </body>
 

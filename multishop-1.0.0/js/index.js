@@ -1,11 +1,3 @@
-$.ajax({
-    url: "https://localhost:44368/api/AccessAPI/login",
-    type: "GET",
-    success: function (result) {
-        // Xử lý kết quả trả về
-        console.log(result);
-    }
-});
 
 $.ajax({
     url: "https://localhost:44368/api/hangsanxuatapi",
@@ -73,18 +65,24 @@ $.ajax({
 });
 
 function muaSp(productId) {
+    var cart = localStorage.getItem("cart");
+    console.log(cart);
+    if(cart.length) {
+        cart = JSON.parse(cart)
+    } else {
+        cart = []
+    }
+    console.log(cart);
     $.ajax({
-        url: 'https://localhost:44368/api/GioHangAPI/add/' + productId,
         type: 'POST',
+        url: 'https://localhost:44368/api/GioHangAPI/add/' + productId,
+        contentType: "application/json",
+        data: JSON.stringify(cart),
         success: function (res) {
-            if (res == "true") {
-                showGioHang()
-                $('#noiDung').html("Add to cart successed!");
-                $('#success_tic').modal('show');
-            }
-            else {
-                console.log(res);
-            }
+            $('#noiDung').html("Add to cart successed!");
+            $('#success_tic').modal('show');
+            console.log(res);
+            localStorage.setItem("cart", JSON.stringify(res));
         },
         error: function (error) {
             console.log(error);
