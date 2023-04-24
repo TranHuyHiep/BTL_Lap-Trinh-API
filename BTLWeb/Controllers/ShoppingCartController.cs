@@ -105,43 +105,28 @@ namespace BTLWeb.Controllers
             });
         }
 
-        public JsonResult CheckKhachHang()
+        public JsonResult CheckKhachHang(string username)
         {
-            var username = HttpContext.Session.GetString("Username");
-            if (username != null)
+            var result = db.TUsers.Where(s => s.Username.Equals(username));
+            if (result == null)
             {
-                var result = db.TKhachHangs.Find(username);
-                if(result != null)
-                {
-                    return Json(new
-                    {
-                        status = true
-                    });
+                return new JsonResult(false);
                 }
-            }
-            return Json(new
-            {
-                status = false
-            });
+            return new JsonResult(true);
         }
 
-        public JsonResult CreateOrderNoCreateKhachHang(string orderViewModel)
+        public JsonResult CreateOrderNoCreateKhachHang(string orderViewModel, string cartLocal, string username)
         {
-            var username = HttpContext.Session.GetString("Username");
-
             var order = new JavaScriptSerializer().Deserialize<OrderViewModel>(orderViewModel);
             order.NgayHoaDon = DateTime.Now.ToString();
             var orderNew = new THoaDonBan();
 
             orderNew.UpdateOrder(order);
             orderNew.MaKhachHang = username;
-            var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
+            var cart = new JavaScriptSerializer().Deserialize<List<ShoppingCartViewModel>>(cartLocal);
             if (cart == null || cart.Count() == 0)
             {
-                return Json(new
-                {
-                    status = false
-                });
+                return new JsonResult(false);
             }
             List<TChiTietHdb> orderDetails = new List<TChiTietHdb>();
 
@@ -156,27 +141,22 @@ namespace BTLWeb.Controllers
 
             if (hoaDonBanService.Create(orderNew, orderDetails) == true)
             {
-                return Json(new
-                {
-                    status = true
-                });
+                return new JsonResult(true);
             }
             else
             {
-                return Json(new
-                {
-                    status = false
-                });
+                return new JsonResult(false);
             }
         }
 
-        public JsonResult CreateOrder(string orderViewModel, string khachHang)
+        public JsonResult CreateOrder(string orderViewModel, string khachHang, string cartLocal, string username)
         {
             TKhachHang _khachHang = new JavaScriptSerializer().Deserialize<TKhachHang>(khachHang);
-            if (HttpContext.Session.GetString("Username") != null)
+            var temp = db.TUsers.Where(s => s.Username.Equals(username));
+            if (username != null && temp == null)
             {
-                _khachHang.Username = HttpContext.Session.GetString("Username");
-                _khachHang.MaKhanhHang = HttpContext.Session.GetString("Username");
+                _khachHang.Username = username;
+                _khachHang.MaKhanhHang = username;
                 db.TKhachHangs.Add(_khachHang);
                 db.SaveChanges();
             }
@@ -187,8 +167,9 @@ namespace BTLWeb.Controllers
 
             orderNew.UpdateOrder(order);
             orderNew.MaKhachHang = _khachHang.MaKhanhHang;
-            var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
-            if(cart == null || cart.Count() == 0)
+            var cart = new JavaScriptSerializer().Deserialize<List<ShoppingCartViewModel>>(cartLocal);
+
+            if (cart == null || cart.Count() == 0)
             {
                 return Json(new
                 {
@@ -208,17 +189,11 @@ namespace BTLWeb.Controllers
 
             if(hoaDonBanService.Create(orderNew, orderDetails) == true)
             {
-                return Json(new
-                    {
-                        status = true
-                    });
+                return new JsonResult(true);
             }
             else
             {
-                return Json(new
-                {
-                    status = false
-                });
+                return new JsonResult(false);
             }
         }
     }

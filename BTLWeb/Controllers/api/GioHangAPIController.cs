@@ -17,21 +17,10 @@ namespace BTLWeb.Controllers
         QlbanMayAnhContext db = new QlbanMayAnhContext();
         HoaDonBanService hoaDonBanService = new HoaDonBanService();
          
-        [HttpGet("")]
-        public ActionResult<List<ShoppingCartViewModel>> Get()
-        {
-            var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
-            if (cart == null)
-            {
-                cart = new List<ShoppingCartViewModel>();
-            }
-            return Ok(cart);
-        }
-
         [HttpPost("add/{productId}")]
-        public JsonResult Add(string productId)
+        public JsonResult Add(string productId, [FromBody] List<ShoppingCartViewModel> cart)
         {
-            var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
+            /*var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);*/
             if (cart == null)
             {
                 cart = new List<ShoppingCartViewModel>();
@@ -58,58 +47,25 @@ namespace BTLWeb.Controllers
 
             HttpContext.Session.Set<List<ShoppingCartViewModel>>(CommonConstants.SessionCart, cart);
 
-            return new JsonResult("true");
+            return new JsonResult(cart);
         }
 
-        [HttpPut]
-        public IActionResult Update(List<ShoppingCartViewModel> cartViewModel)
+        [HttpGet("check-khach-hang/{username}")]
+        public JsonResult CheckKhachHang([FromQuery] string username)
         {
-            var cartSession = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
-            foreach (var item in cartSession)
-            {
-                foreach (var jitem in cartViewModel)
-                {
-                    if (item.ProductId == jitem.ProductId)
-                    {
-                        item.Quantity = jitem.Quantity;
-                    }
-                }
-            }
-
-            HttpContext.Session.Set<List<ShoppingCartViewModel>>(CommonConstants.SessionCart, cartSession);
-            return Ok(new
-            {
-                status = true
-            });
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteAll()
-        {
-            HttpContext.Session.Set<List<ShoppingCartViewModel>>(CommonConstants.SessionCart, new List<ShoppingCartViewModel>());
-            return Ok(new
-            {
-                status = true
-            });
-        }
-
-        [HttpGet("api/check-khach-hang")]
-        public IActionResult CheckKhachHang()
-        {
-            var username = HttpContext.Session.GetString("Username");
             if (username != null)
             {
                 var result = db.TKhachHangs.Find(username);
                 if (result != null)
                 {
-                    return Ok(new { status = true });
+                    return new JsonResult("true");
                 }
             }
-            return Ok(new { status = false });
+            return new JsonResult("true");
         }
 
-        [HttpPost("api/create-order-no-create-khach-hang")]
-        public IActionResult CreateOrderNoCreateKhachHang(string orderViewModel)
+        [HttpPost("create-order-no-create-khach-hang")]
+        public JsonResult CreateOrderNoCreateKhachHang([FromBody] string orderViewModel)
         {
             var username = HttpContext.Session.GetString("Username");
 
@@ -122,7 +78,7 @@ namespace BTLWeb.Controllers
             var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
             if (cart == null || cart.Count() == 0)
             {
-                return Ok(new { status = false });
+                return new JsonResult("false");
             }
             List<TChiTietHdb> orderDetails = new List<TChiTietHdb>();
 
@@ -137,11 +93,64 @@ namespace BTLWeb.Controllers
 
             if (hoaDonBanService.Create(orderNew, orderDetails) == true)
             {
-                return Ok(new { status = true });
+                return new JsonResult("true");
             }
             else
             {
-                return Ok(new { status = false });
+                return new JsonResult("false");
+            }
+        }
+
+        [HttpPost("CreateOrder")]
+        public JsonResult CreateOrder(string orderViewModel, string khachHang)
+        {
+            TKhachHang _khachHang = new JavaScriptSerializer().Deserialize<TKhachHang>(khachHang);
+            if (HttpContext.Session.GetString("Username") != null)
+            {
+                _khachHang.Username = HttpContext.Session.GetString("Username");
+                _khachHang.MaKhanhHang = HttpContext.Session.GetString("Username");
+                db.TKhachHangs.Add(_khachHang);
+                db.SaveChanges();
+            }
+
+            var order = new JavaScriptSerializer().Deserialize<OrderViewModel>(orderViewModel);
+            order.NgayHoaDon = DateTime.Now.ToString();
+            var orderNew = new THoaDonBan();
+
+            orderNew.UpdateOrder(order);
+            orderNew.MaKhachHang = _khachHang.MaKhanhHang;
+            var cart = HttpContext.Session.Get<List<ShoppingCartViewModel>>(CommonConstants.SessionCart);
+            if (cart == null || cart.Count() == 0)
+            {
+                return new JsonResult(new
+                {
+                    status = false
+                });
+            }
+            List<TChiTietHdb> orderDetails = new List<TChiTietHdb>();
+
+            foreach (var item in cart)
+            {
+                var detail = new TChiTietHdb();
+                detail.MaSp = item.ProductId;
+                detail.SoLuongBan = item.Quantity;
+                detail.DonGiaBan = item.Product.GiaLonNhat;
+                orderDetails.Add(detail);
+            }
+
+            if (hoaDonBanService.Create(orderNew, orderDetails) == true)
+            {
+                return new JsonResult(new
+                {
+                    status = true
+                });
+            }
+            else
+            {
+                return new JsonResult(new
+                {
+                    status = false
+                });
             }
         }
     }

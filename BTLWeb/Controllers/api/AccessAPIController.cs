@@ -11,18 +11,6 @@ namespace BTLWeb.Controllers.api
     public class AccessAPIController : ControllerBase
     {
         QlbanMayAnhContext db = new QlbanMayAnhContext();
-        [HttpGet("Login")]
-        public JsonResult Login()
-        {
-            if (HttpContext.Session.GetString("Username") == null)
-            {
-                return new JsonResult("false");
-            }
-            else
-            {
-                return new JsonResult("true");
-            }
-        }
 
         [HttpPost("Login")]
         public JsonResult Login([FromBody] TUser user)
