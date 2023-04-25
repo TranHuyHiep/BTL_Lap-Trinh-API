@@ -1,3 +1,14 @@
+function signIn() {
+    localStorage.clear()
+    window.location.href = "../material-dashboard-2/pages/sign-in.html";    
+}
+
+function signUp() {
+    localStorage.clear()
+    window.location.href = "../material-dashboard-2/pages/sign-up.html";    
+}
+
+
 
 $.ajax({
     url: "https://localhost:44368/api/hangsanxuatapi",
