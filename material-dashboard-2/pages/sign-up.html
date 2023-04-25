@@ -195,15 +195,13 @@
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-          if(response == "true") {
-            window.location.href = "otp.html"
-          }
-          else {
-            alert(response)
-          }
+          localStorage.setItem("user", JSON.stringify(user))
+          localStorage.setItem("oTPClass", response)
+          window.location.href = "otp.html";
         },
         error: function (error) {
-          alert("ko")
+          console.log(error);
+          alert("Bạn phải nhập đúng thông tin")
         }
       });
     }

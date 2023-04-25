@@ -157,15 +157,22 @@
 
     function sendOTP() {
       var otp = $("#otp").val();
+      console.log(otp);
+      console.log(localStorage.getItem("oTPClass"));
+      console.log(localStorage.getItem("user"));
       $.ajax({
         type: "POST",
-        url: "https://localhost:44368/api/AccessAPI/VerifyOTP",
-        data: JSON.stringify(otp),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        url: "https://localhost:44368/Access/VerifyOTP",
+        data: {
+            oTPClass: localStorage.getItem("oTPClass"),
+            otp: otp,
+            userString: localStorage.getItem("user")
+        },
         success: function (response) {
           if(response == "true") {
             window.location.href = "sign-in.html"
+          } else {
+            alert("Sai mã OTP")
           }
         },
         error: function (error) {
