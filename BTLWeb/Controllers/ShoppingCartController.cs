@@ -4,6 +4,7 @@ using BTLWeb.Models.ViewModels;
 using BTLWeb.Service;
 using Microsoft.AspNetCore.Mvc;
 using Nancy.Json;
+using NuGet.Protocol;
 using System.Text.Json;
 
 namespace BTLWeb.Controllers
@@ -113,7 +114,7 @@ namespace BTLWeb.Controllers
             {
                 return new JsonResult(false);
             }
-            return new JsonResult(true);
+            return new JsonResult(result);
         }
 
         public JsonResult CreateOrderNoCreateKhachHang(string orderViewModel, string cartLocal, string username)
@@ -155,8 +156,10 @@ namespace BTLWeb.Controllers
             TKhachHang _khachHang = new JavaScriptSerializer().Deserialize<TKhachHang>(khachHang);
             _khachHang.Username = username;
             _khachHang.MaKhanhHang = username;
-            db.TKhachHangs.Add(_khachHang);
-            db.SaveChanges();
+            if(db.TKhachHangs.Find(username) == null) {
+                db.TKhachHangs.Add(_khachHang);
+                db.SaveChanges();
+            }
             var order = new JavaScriptSerializer().Deserialize<OrderViewModel>(orderViewModel);
             order.NgayHoaDon = DateTime.Now.ToString();
             var orderNew = new THoaDonBan();

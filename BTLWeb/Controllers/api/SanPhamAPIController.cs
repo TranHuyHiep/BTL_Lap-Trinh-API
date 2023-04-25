@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using X.PagedList;
+using BTLWeb.Models.Dao;
 
 namespace BTLWeb.Controllers
 {
@@ -28,7 +31,7 @@ namespace BTLWeb.Controllers
         [HttpGet("search/{strSearch}")]
         public JsonResult Search(String strSearch)
         {
-            List<TDanhMucSp> products = db.TDanhMucSps.ToList();
+            var products = db.TDanhMucSps.Where(x => x.TenSp.ToLower().Contains(strSearch.ToLower())).OrderBy(x => x.TenSp);
             return new JsonResult(products);
         }
 
@@ -77,16 +80,32 @@ namespace BTLWeb.Controllers
         }
 
         [HttpGet("ChiTietSanPham")]
-        public JsonResult ChiTietSanPham([FromQuery] string maSp)
+        public IActionResult ChiTietSanPham(string maSp)
         {
-            var sanpham = db.TDanhMucSps.SingleOrDefault(x => x.MaSp == maSp);
-            var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
-            var result = new
+            var sanpham = db.TDanhMucSps.Include(x => x.TAnhSps).SingleOrDefault(x => x.MaSp == maSp);
+
+            var options = new JsonSerializerOptions
             {
-                sanpham = sanpham,
-                anhSanPham = anhSanPham
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
             };
-            return new JsonResult(result);
+
+            return new JsonResult(sanpham, options);
+        }
+
+        [HttpGet("ChiTietAnhSanPham")]
+        public IActionResult ChiTietAnhSanPham(string maSp)
+        {
+            var anhs = db.TAnhSps.Where(x => x.MaSp.Equals(maSp)).ToList();
+
+            return new JsonResult(anhs);
+        }
+
+        public JsonResult ChiTietSanPhamComment(string maSp)
+        {
+            List<Comment> comments = new CommentDao().ListComment(0, maSp);
+            return new JsonResult(comments);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -94,5 +113,7 @@ namespace BTLWeb.Controllers
         {
             return new JsonResult(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        
     }
 }

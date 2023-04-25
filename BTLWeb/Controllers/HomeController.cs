@@ -1,7 +1,9 @@
 ﻿using Azure;
 using BTLWeb.Models;
+using BTLWeb.Models.Dao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Converters;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using X.PagedList;
@@ -99,6 +101,27 @@ namespace BTLWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public JsonResult ChiTietSanPhamComment(string maSp)
+        {
+            List<Comment> comments = new CommentDao().ListComment(0, maSp);
+            return new JsonResult(comments);
+        }
+
+        [HttpPost]
+        [Route("api/v1/addcoment")]
+        public IActionResult AddNewComment([FromBody] dynamic data)
+        {
+            var format = "yyyy-MM-dd"; // your datetime format
+            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format };
+            var cmt = Newtonsoft.Json.JsonConvert.DeserializeObject<Comment>(data.ToString(), dateTimeConverter);
+            var id = db.TComments.Select(c => c.ID).Max();
+            id = id == null ? 1 : id + 1;
+            cmt.ID = id;
+            db.TComments.Add(cmt);
+            db.SaveChanges();
+            return Ok("okkkkk");
         }
     }
 }

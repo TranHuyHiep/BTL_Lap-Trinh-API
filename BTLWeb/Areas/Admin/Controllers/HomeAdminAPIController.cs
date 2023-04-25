@@ -148,7 +148,7 @@ namespace BTLWeb.Areas.Admin.Controllers
             int nam = 2023;
             for (int thang = 1; thang <= 12; thang++)
             {
-                List<THoaDonBan> lstHoaDon = db.THoaDonBans.FromSqlRaw("SELECT * FROM THoaDonBan WHERE YEAR(CONVERT(datetime, NgayHoaDon, 101)) = {0} and month(CONVERT(datetime, NgayHoaDon, 101)) = {1}", nam, thang).ToList();
+                List<THoaDonBan> lstHoaDon = db.THoaDonBans.FromSqlRaw("SELECT * FROM THoaDonBan WHERE YEAR(CONVERT(datetime, NgayHoaDon, 101)) = {0} and month(CONVERT(datetime, NgayHoaDon, 101)) = {1} and status = 3", nam, thang).ToList();
                 var sum = 0;
                 foreach (var item in lstHoaDon)
                 {

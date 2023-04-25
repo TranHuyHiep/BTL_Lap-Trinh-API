@@ -68,7 +68,7 @@ namespace BTLWeb.Controllers
                     /*HttpContext.Session.SetString("OTPMail", otpmail);
                     HttpContext.Session.SetString("UserCheck", user.Username);
                     HttpContext.Session.SetString("PasswordCheck", user.Password);*/
-                    //SendMail(user.Username, "Xác thực đăng ký", "Mã OTP xác thực của bạn là : " + otpmail);
+                    SendMail(user.Username, "Xác thực đăng ký", "Mã OTP xác thực của bạn là : " + otpmail);
                     return new JsonResult(otpmail);
                 }
                 else

@@ -7,6 +7,7 @@ using Nancy.Json;
 using System.Text.Json;
 using System.Linq;
 using System.Collections.Generic;
+using NuGet.Protocol;
 
 namespace BTLWeb.Controllers
 {
@@ -55,10 +56,10 @@ namespace BTLWeb.Controllers
         {
             if (username != null)
             {
-                var result = db.TKhachHangs.Find(username);
+                var result = db.TKhachHangs.Find(username).ToJson;
                 if (result != null)
                 {
-                    return new JsonResult("true");
+                    return new JsonResult(result);
                 }
             }
             return new JsonResult("true");
