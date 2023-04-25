@@ -2,131 +2,81 @@
 using BTLWeb.Models;
 using System.Net;
 using System.Net.Mail;
+using Nancy.Json;
 
 namespace BTLWeb.Controllers
 {
     public class AccessController : Controller
     {
         QlbanMayAnhContext db = new QlbanMayAnhContext();
-        [HttpGet]
-        public ActionResult Login()
+        public JsonResult Login([FromBody] TUser user)
         {
             if (HttpContext.Session.GetString("Username") == null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(TUser user)
-        {
-            if (HttpContext.Session.GetString("Username")==null)
             {
                 /*var f_password = GetMD5(password);*/
                 var data = db.TUsers.Where(s => s.Username.Equals(user.Username) && s.Password.Equals(user.Password)).FirstOrDefault();
                 if (data != null)
                 {
-                    HttpContext.Session.SetString("Username", data.Username.ToString());
                     //add session
                     if (data.LoaiUser == 0)
                     {
-                        return RedirectToAction("Index", "HomeAdmin", new { area = "Admin" });
+                        return new JsonResult("admin");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return new JsonResult("user");
                     }
                 }
-                else
-                {
-                    ViewBag.error = "Login failed";
-                    return RedirectToAction("Login", "Access");
-                }
             }
-            return View();
-        }
-        [HttpGet]
-        public ActionResult Register()
-        {
-            return View();
+            return new JsonResult("false");
         }
 
-        [HttpGet]
-        public ActionResult OTP()
+        public JsonResult VerifyOTP(string oTPClass, string otp, string userString)
         {
-            return View();
-        }
-
-        public class OTPClass
-        {
-            public string otpGet { get; set; }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult VerifyOTP(OTPClass oTPClass)
-        {
+            TUser user = new JavaScriptSerializer().Deserialize<TUser>(userString);
             if (ModelState.IsValid)
             {
-                var otp = oTPClass.otpGet;
-                var otpcheck = HttpContext.Session.GetString("OTPMail");
-                if (otp.Equals(otpcheck))
+                if (otp.Equals(oTPClass))
                 {
-                    var username = HttpContext.Session.GetString("UserCheck");
-                    var password = HttpContext.Session.GetString("PasswordCheck");
-                    TUser user = new TUser();
-                    user.Username = username;
-                    user.Password = password;
                     user.LoaiUser = 1;
                     db.TUsers.Add(user);
                     db.SaveChanges();
-                    HttpContext.Session.Clear();//remove session
-                    HttpContext.Session.Remove("OTPMail");
+                    //HttpContext.Session.Clear();//remove session
+                    /*HttpContext.Session.Remove("OTPMail");
                     HttpContext.Session.Remove("UserCheck");
-                    HttpContext.Session.Remove("PasswordCheck");
-                    return RedirectToAction("Login", "Access");
+                    HttpContext.Session.Remove("PasswordCheck");*/
+                    return new JsonResult("true");
                 }
                 else
                 {
-                    ViewBag.error = "OTP incorrect";
-                    return RedirectToAction("OTP", "Access");
+                    return new JsonResult("OTP incorrect");
                 }
             }
-            return RedirectToAction("OTP", "Access");
+            return new JsonResult("false");
         }
 
         //POST: Register
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(TUser user)
+        [HttpPost("Register")]
+        public JsonResult Register([FromBody] TUser user)
         {
             if (ModelState.IsValid)
             {
                 var check = db.TUsers.FirstOrDefault(s => s.Username == user.Username);
                 if (check == null)
                 {
-                   
                     var otpmail = RandomNumber(6);
-                    HttpContext.Session.SetString("OTPMail", otpmail);
+                    /*HttpContext.Session.SetString("OTPMail", otpmail);
                     HttpContext.Session.SetString("UserCheck", user.Username);
-                    HttpContext.Session.SetString("PasswordCheck", user.Password);
-                    SendMail(user.Username, "Xác thực đăng ký", "Mã OTP xác thực của bạn là : " + otpmail);
-                    return RedirectToAction("OTP", "Access");
+                    HttpContext.Session.SetString("PasswordCheck", user.Password);*/
+                    //SendMail(user.Username, "Xác thực đăng ký", "Mã OTP xác thực của bạn là : " + otpmail);
+                    return new JsonResult(otpmail);
                 }
                 else
                 {
-                    ViewBag.error = "Username already exists";
-                    return View();
+                    return new JsonResult("Tài khoản đã tồn tại");
                 }
-
             }
-            return View();
-
-
+            return new JsonResult("Thông tin không hợp lệ");
         }
 
         public static string RandomNumber(int numberRD)
@@ -151,18 +101,11 @@ namespace BTLWeb.Controllers
             return randomStr;
         }
 
-        public ActionResult Logout()
-        {
-            HttpContext.Session.Clear();//remove session
-            HttpContext.Session.Remove("Username");
-            return RedirectToAction("Login", "Access");
-        }
-
         //thư viện gửi mail - có sẵn, thay thông tin của mail chủ mình vào
         public void SendMail(String to, String subject, String content)
         {
-            String mailAddress = "quy442002@gmail.com";
-            String mailPassword = "aphlyahluxxifoik"; // lấy mk ứng dụng từ tài khoản gg 
+            String mailAddress = "hiptrangpt@gmail.com";
+            String mailPassword = "qiwsxspjamjelrcb"; // lấy mk ứng dụng từ tài khoản gg 
 
             MailMessage msg = new MailMessage(new MailAddress(mailAddress), new MailAddress(to));
             msg.Subject = subject;

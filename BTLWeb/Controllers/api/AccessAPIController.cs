@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
 using System.Net;
+using BTLWeb.Models.ViewModels;
+using Nancy.Json;
 
 namespace BTLWeb.Controllers.api
 {
@@ -21,7 +23,6 @@ namespace BTLWeb.Controllers.api
                 var data = db.TUsers.Where(s => s.Username.Equals(user.Username) && s.Password.Equals(user.Password)).FirstOrDefault();
                 if (data != null)
                 {
-                    HttpContext.Session.SetString("Username", data.Username.ToString());
                     //add session
                     if (data.LoaiUser == 0)
                     {
@@ -36,33 +37,21 @@ namespace BTLWeb.Controllers.api
             return new JsonResult("false");
         }
 
-        public class OTPClass
+        public JsonResult VerifyOTP(string oTPClass)
         {
-            public string otpGet { get; set; }
-        }
-
-        [HttpPost("VerifyOTP")]
-        [ValidateAntiForgeryToken]
-        public JsonResult VerifyOTP([FromBody] OTPClass oTPClass)
-        {
+            string otp ="", userString = "";
+            TUser user = new JavaScriptSerializer().Deserialize<TUser>(userString);
             if (ModelState.IsValid)
             {
-                var otp = oTPClass.otpGet;
-                var otpcheck = HttpContext.Session.GetString("OTPMail");
-                if (otp.Equals(otpcheck))
+                if (otp.Equals(oTPClass))
                 {
-                    var username = HttpContext.Session.GetString("UserCheck");
-                    var password = HttpContext.Session.GetString("PasswordCheck");
-                    TUser user = new TUser();
-                    user.Username = username;
-                    user.Password = password;
                     user.LoaiUser = 1;
                     db.TUsers.Add(user);
                     db.SaveChanges();
-                    HttpContext.Session.Clear();//remove session
-                    HttpContext.Session.Remove("OTPMail");
+                    //HttpContext.Session.Clear();//remove session
+                    /*HttpContext.Session.Remove("OTPMail");
                     HttpContext.Session.Remove("UserCheck");
-                    HttpContext.Session.Remove("PasswordCheck");
+                    HttpContext.Session.Remove("PasswordCheck");*/
                     return new JsonResult("true");
                 }
                 else
@@ -82,22 +71,19 @@ namespace BTLWeb.Controllers.api
                 var check = db.TUsers.FirstOrDefault(s => s.Username == user.Username);
                 if (check == null)
                 {
-
                     var otpmail = RandomNumber(6);
-                    HttpContext.Session.SetString("OTPMail", otpmail);
+                    /*HttpContext.Session.SetString("OTPMail", otpmail);
                     HttpContext.Session.SetString("UserCheck", user.Username);
-                    HttpContext.Session.SetString("PasswordCheck", user.Password);
-                    SendMail(user.Username, "Xác thực đăng ký", "Mã OTP xác thực của bạn là : " + otpmail);
-                    return new JsonResult("true");
+                    HttpContext.Session.SetString("PasswordCheck", user.Password);*/
+                    //SendMail(user.Username, "Xác thực đăng ký", "Mã OTP xác thực của bạn là : " + otpmail);
+                    return new JsonResult(otpmail);
                 }
                 else
                 {
-                    return new JsonResult("Username already exists");
+                    return new JsonResult("Tài khoản đã tồn tại");
                 }
             }
-            return new JsonResult("false");
-
-
+            return new JsonResult("Thông tin không hợp lệ");
         }
 
         public static string RandomNumber(int numberRD)
@@ -120,14 +106,6 @@ namespace BTLWeb.Controllers.api
                 randomStr = "error";
             }
             return randomStr;
-        }
-
-        [HttpGet("logout")]
-        public JsonResult Logout()
-        {
-            HttpContext.Session.Clear();//remove session
-            HttpContext.Session.Remove("Username");
-            return new JsonResult("true");
         }
 
         //thư viện gửi mail - có sẵn, thay thông tin của mail chủ mình vào
