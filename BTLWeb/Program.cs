@@ -21,6 +21,7 @@ builder.Services.AddSession(options =>
 {
     options.Cookie.IsEssential = true;
 });
+
 builder.Services.AddDistributedMemoryCache();
 var app = builder.Build();
 
@@ -38,7 +39,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
 app.UseCors(options =>
            options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

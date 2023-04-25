@@ -17,6 +17,7 @@ namespace BTLWeb.Controllers.api
             int pageSize = 8;
             int pageNumber = page == null || page < 1 ? 1 : page.Value;
             var lst = db.THoaDonBans.AsNoTracking().Where(x => x.MaKhachHang.Equals(maKhachHang)).OrderBy(x => x.MaHoaDon);
+
             PagedList<THoaDonBan> pageList = new PagedList<THoaDonBan>(lst, pageNumber, pageSize);
             return new JsonResult(pageList);
         }
