@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>MultiShop - Online Shop Website Template</title>
+    <title>CameraShop - Online Shop Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -73,10 +73,10 @@
                         <span class="badge text-dark border border-dark rounded-circle"
                             style="padding-bottom: 2px;">0</span>
                     </a>
-                    <a href="" class="btn px-0 ml-2">
-                        <i class="fas fa-shopping-cart text-dark"></i>
-                        <span class="badge text-dark border border-dark rounded-circle"
-                            style="padding-bottom: 2px;">0</span>
+                    <a href="cart.html" class="btn px-0 ml-3">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge text-secondary border border-secondary rounded-circle"
+                            style="padding-bottom: 2px;" id="numberCart">0</span>
                     </a>
                 </div>
             </div>
@@ -84,7 +84,7 @@
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-4">
                 <a href="" class="text-decoration-none">
-                    <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
+                    <span class="h1 text-uppercase text-primary bg-dark px-2">Camera</span>
                     <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
                 </a>
             </div>
@@ -145,7 +145,7 @@
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                     <a href="" class="text-decoration-none d-block d-lg-none">
-                        <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
+                        <span class="h1 text-uppercase text-dark bg-light px-2">Camera</span>
                         <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -357,6 +357,10 @@
             });
         }
         function loadData() {
+            let cart = localStorage.getItem("cart")
+            cart = JSON.parse(cart)
+            console.log(cart)
+            $("#numberCart").html(cart.length)
             let username = JSON.parse(localStorage.getItem("username"))
             $.ajax({
                 url: "https://localhost:44368/Checkout/DanhMucHoaDon?maKhachHang=" + username,
@@ -384,10 +388,17 @@
                         <th>
                           Tổng tiền hóa đơn
                         </th>
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody id="hoadon">`;
+
+
                     $.each(result, function (index, item) {
                         html += '<tr class="table-success">' +
                             '<td>' + item.maHoaDon + '</td>' +

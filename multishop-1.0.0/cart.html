@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>MultiShop - Online Shop Website Template</title>
+    <title>CameraShop - Online Shop Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -74,10 +74,9 @@
                         <span class="badge text-dark border border-dark rounded-circle"
                             style="padding-bottom: 2px;">0</span>
                     </a>
-                    <a href="" class="btn px-0 ml-2">
-                        <i class="fas fa-shopping-cart text-dark"></i>
-                        <span class="badge text-dark border border-dark rounded-circle"
-                            style="padding-bottom: 2px;">0</span>
+                    <a href="cart.html" class="btn px-0 ml-3">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;" id="numberCart">0</span>
                     </a>
                 </div>
             </div>
@@ -85,7 +84,7 @@
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-4">
                 <a href="" class="text-decoration-none">
-                    <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
+                    <span class="h1 text-uppercase text-primary bg-dark px-2">Camera</span>
                     <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
                 </a>
             </div>
@@ -141,12 +140,15 @@
                         <a href="" class="nav-item nav-link">Jackets</a>
                         <a href="" class="nav-item nav-link">Shoes</a>
                     </div>
+
+
+
                 </nav>
             </div>
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                     <a href="" class="text-decoration-none d-block d-lg-none">
-                        <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
+                        <span class="h1 text-uppercase text-dark bg-light px-2">Camera</span>
                         <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -357,27 +359,27 @@
                 <div class="bg-light p-30 mb-5">
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label>Your name</label>
+                            <label>Họ và tên</label>
                             <input class="form-control" type="text" placeholder="Hiep Tran" id="yourName">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Birthday</label>
-                            <input class="form-control" type="date" placeholder="07/10/2002" id="birthDay">
+                            <label>Ngày tháng năm sinh</label>
+                            <input class="form-control" type="date" id="birthDay">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Phone number</label>
+                            <label>Số điện thoại</label>
                             <input class="form-control" type="text" placeholder="09123456789" id="phone">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Address</label>
+                            <label>Địa chỉ</label>
                             <input class="form-control" type="text" placeholder="123 Street" id="address">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Note</label>
+                            <label>Ghi chú</label>
                             <input class="form-control" type="text" placeholder="sang xin min" id="note">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Payment Methods</label>
+                            <label>Phương thức thanh toán</label>
                             <select class="custom-select" id="method">
                                 <option selected value="0">Ship code</option>
                                 <option value="1">Banking</option>
@@ -411,6 +413,10 @@
         loadData()
 
         function loadData() {
+            let cart = localStorage.getItem("cart")
+            cart = JSON.parse(cart)
+            console.log(cart)
+            $("#numberCart").html(cart.length)
             var result = localStorage.getItem("cart")
             if (result == null) {
                 result = []
@@ -445,8 +451,6 @@
                         </div>
                     </td>
                     <td class="align-middle numPrice" id="${i}">${money}</td>
-                    <td class="align-middle"><button class="btn btn-sm btn-danger"><i
-                                class="fa fa-times"></i></button></td>
                 </tr>`;
             }
             menu.html(str);
@@ -509,7 +513,7 @@
             } else {
                 result = JSON.parse(result)
             }
-            if(result == 0) return;
+            if (result == 0) return;
 
             localStorage.setItem("cart", JSON.stringify([]));
             if (check == true) {
@@ -531,7 +535,7 @@
             } else {
                 result = JSON.parse(result)
             }
-            if(result.length == 0) {
+            if (result.length == 0) {
                 return;
             }
             $.ajax({
@@ -542,7 +546,20 @@
                     username: JSON.parse(localStorage.getItem("username")),
                 },
                 success: function (res) {
+                    console.log(res);
+                    $('#yourName').val(res.tenKhachHang)
+                    var datetimeString = "2023-04-05T00:00:00";
+                    var dateObj = new Date(datetimeString);
+                    var year = dateObj.getFullYear();
+                    var month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                    var day = dateObj.getDate().toString().padStart(2, '0');
+                    var dateString = year + "-" + month + "-" + day;
+                    console.log(dateString); // Kết quả: "2023-04-05"
+                    $('#birthDay').val(dateString)
+                    $('#phone').val(res.soDienThoai)
+                    $('#address').val(res.diaChi)
                     if (res == true) {
+
                         var tongtien = $('#sumAllMoney').text();
                         var note = $('#note').val()
 
@@ -552,21 +569,21 @@
                             GhiChu: note,
                             TrangThai: 0,
                         }
-                        $.ajax({
-                            url: 'https://localhost:44368/shoppingcart/CreateOrderNoCreateKhachHang',
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
-                                orderViewModel: JSON.stringify(hoaDonBan),
-                                cartLocal: JSON.stringify(JSON.parse(localStorage.getItem("cart"))),
-                                username: JSON.parse(localStorage.getItem("username")),
-                            },
-                            success: function (res) {
-                                $('#noiDung').html("Hoá đơn đã được ghi nhận");
-                                $('#success_tic').modal('show');
-                                btnDeleteAll(false);
-                            }
-                        })
+                        // $.ajax({
+                        //     url: 'https://localhost:44368/shoppingcart/CreateOrderNoCreateKhachHang',
+                        //     type: 'POST',
+                        //     dataType: 'json',
+                        //     data: {
+                        //         orderViewModel: JSON.stringify(hoaDonBan),
+                        //         cartLocal: JSON.stringify(JSON.parse(localStorage.getItem("cart"))),
+                        //         username: JSON.parse(localStorage.getItem("username")),
+                        //     },
+                        //     success: function (res) {
+                        //         $('#noiDung').html("Hoá đơn đã được ghi nhận");
+                        //         $('#success_tic').modal('show');
+                        //         btnDeleteAll(false);
+                        //     }
+                        // })
                     } else {
                         $('.bd-example-modal-lg').modal('show');
                     }
@@ -588,7 +605,7 @@
                 TrangThai: 0,
             }
 
-            var yourname = $('#yourname').val()
+            var yourname = $('#yourName').val()
             var birthDay = $('#birthDay').val()
             var phone = $('#phone').val()
             var address = $('#address').val()
@@ -625,9 +642,7 @@
                 }
             })
         }
-
-
-
+        
     </script>
 </body>
 

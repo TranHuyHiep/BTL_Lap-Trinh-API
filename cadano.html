@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Yoroi Wallet Example</title>
+  <script src="https://api.yoroiwallet.com/webapi/external.js"></script>
+</head>
+<body>
+  <h1>Yoroi Wallet Example</h1>
+  <button onclick="connect()">Connect to Yoroi Wallet</button>
+  <p>Current account: <span id="account"></span></p>
+
+  <script>
+    async function connect() {
+      // Check if Yoroi API is already loaded
+      if (typeof window.cardano === 'undefined') {
+        alert("Please make sure to load Yoroi Web API library.");
+        return;
+      }
+
+      try {
+        // Get current account information
+        const response = await window.cardano.request({ "command": "get_address" });
+        const currentAddress = response[0];
+        document.getElementById('account').textContent = currentAddress;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -7,8 +7,16 @@ function signUp() {
     localStorage.clear()
     window.location.href = "../material-dashboard-2/pages/sign-up.html";    
 }
-
-
+loadData()
+function loadData() {
+    let cart = localStorage.getItem("cart")
+    cart = JSON.parse(cart)
+    if(cart == null) {
+        cart = []
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }
+    $("#numberCart").html(cart.length)
+}
 
 $.ajax({
     url: "https://localhost:44368/api/hangsanxuatapi",
@@ -51,8 +59,8 @@ $.ajax({
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">${item.tenSp}</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
+                        <a class="h6 text-decoration-none text-truncate" href="detail.html?maSp=${item.maSp}">${item.tenSp}</a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
                                 <h5>${item.giaLonNhat}</h5><h6 class="text-muted ml-2"></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
@@ -90,10 +98,11 @@ function muaSp(productId) {
         contentType: "application/json",
         data: JSON.stringify(cart),
         success: function (res) {
-            $('#noiDung').html("Add to cart successed!");
+            $('#noiDung').html("Đã thêm vào giỏ hàng!");
             $('#success_tic').modal('show');
             console.log(res);
             localStorage.setItem("cart", JSON.stringify(res));
+            loadData()
         },
         error: function (error) {
             console.log(error);
@@ -138,8 +147,8 @@ function SanPhamTheoHangSanXuat(maHangSx) {
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">${item.tenSp}</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
+                        <a class="h6 text-decoration-none text-truncate" href="detail.html?maSp=${item.maSp}">${item.tenSp}</a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
                                 <h5>${item.giaLonNhat}</h5><h6 class="text-muted ml-2"></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
