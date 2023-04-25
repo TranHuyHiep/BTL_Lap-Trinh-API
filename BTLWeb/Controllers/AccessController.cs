@@ -47,10 +47,6 @@ namespace BTLWeb.Controllers
                     HttpContext.Session.Remove("PasswordCheck");*/
                     return new JsonResult("true");
                 }
-                else
-                {
-                    return new JsonResult("OTP incorrect");
-                }
             }
             return new JsonResult("false");
         }
@@ -84,7 +80,6 @@ namespace BTLWeb.Controllers
             string randomStr = "";
             try
             {
-
                 int[] myIntArray = new int[numberRD];
                 int x;
                 Random autoRand = new Random();

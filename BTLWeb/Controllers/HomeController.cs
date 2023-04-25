@@ -1,8 +1,10 @@
 ﻿using Azure;
 using BTLWeb.Models;
 using BTLWeb.Models.Dao;
+using BTLWeb.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Nancy.Json;
 using Newtonsoft.Json.Converters;
 using System.Diagnostics;
 using System.Drawing.Printing;
@@ -43,13 +45,14 @@ namespace BTLWeb.Controllers
             var lst = db.TDanhMucSps.Where(x => x.TenSp.ToLower().Contains(strSearch.ToLower())).OrderBy(x => x.TenSp);
             return View(lst);
         }
-        public IActionResult SearchProductsByPriceRange(string[] priceRange)
+        public JsonResult SearchProductsByPriceRange(string data)
         {
+            List<string> priceRange = new JavaScriptSerializer().Deserialize<List<string>>(data);
             List<TDanhMucSp> products = db.TDanhMucSps.ToList();
 
             if (priceRange == null || priceRange.Contains("all"))
             {
-                return View(products);
+                return new JsonResult(products);
             }
 
             var filteredProducts = new List<TDanhMucSp>();
@@ -63,7 +66,7 @@ namespace BTLWeb.Controllers
                 filteredProducts.AddRange(tempFilteredProducts);
             }
 
-            return View(filteredProducts.Distinct());
+            return new JsonResult(filteredProducts.Distinct());
         }
 
 

@@ -35,8 +35,8 @@ namespace BTLWeb.Controllers
             return new JsonResult(products);
         }
 
-        [HttpGet("SearchProductsByPriceRange")]
-        public JsonResult SearchProductsByPriceRange([FromQuery] string[] priceRange)
+        [HttpPost("SearchProductsByPriceRange")]
+        public JsonResult SearchProductsByPriceRange(String[] priceRange)
         {
             List<TDanhMucSp> products = db.TDanhMucSps.ToList();
 
