@@ -107,11 +107,12 @@ namespace BTLWeb.Controllers
 
         public JsonResult CheckKhachHang(string username)
         {
-            var result = db.TUsers.Where(s => s.Username.Equals(username));
+            //var result = db.TKhachHangs.Where(s => s.MaKhanhHang.Equals(username));
+            var result = db.TKhachHangs.Find(username);
             if (result == null)
             {
                 return new JsonResult(false);
-                }
+            }
             return new JsonResult(true);
         }
 
@@ -152,15 +153,10 @@ namespace BTLWeb.Controllers
         public JsonResult CreateOrder(string orderViewModel, string khachHang, string cartLocal, string username)
         {
             TKhachHang _khachHang = new JavaScriptSerializer().Deserialize<TKhachHang>(khachHang);
-            var temp = db.TUsers.Where(s => s.Username.Equals(username));
-            if (username != null && temp == null)
-            {
-                _khachHang.Username = username;
-                _khachHang.MaKhanhHang = username;
-                db.TKhachHangs.Add(_khachHang);
-                db.SaveChanges();
-            }
-
+            _khachHang.Username = username;
+            _khachHang.MaKhanhHang = username;
+            db.TKhachHangs.Add(_khachHang);
+            db.SaveChanges();
             var order = new JavaScriptSerializer().Deserialize<OrderViewModel>(orderViewModel);
             order.NgayHoaDon = DateTime.Now.ToString();
             var orderNew = new THoaDonBan();
