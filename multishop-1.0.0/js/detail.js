@@ -60,7 +60,7 @@ $.ajax({
                         </div>
                         <small class="pt-1">(99 Reviews)</small>
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">${result.giaLonNhat}</h3>
+                    <h3 class="font-weight-semi-bold mb-4">${result.giaLonNhat.toLocaleString()}</h3>
                     <p class="mb-4">${result.gioiThieuSp}</p>
                     <div class="d-flex align-items-center mb-4 pt-2">
                         <div class="input-group quantity mr-3" style="width: 130px;">
@@ -175,7 +175,7 @@ $.ajax({
                             for (let index = 1; index <= jtem.parentID; index++) {
                                 str += `<i class="fas fa-star"></i>`
                             }
-                            for (let index = 1; index < 5 - jtem.parentID; index++) {
+                            for (let index = 1; index <= 5 - jtem.parentID; index++) {
                                 str += `<i class="far fa-star"></i>`
                             }
                             str +=`</div>

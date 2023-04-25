@@ -300,6 +300,15 @@
                     </tbody>
                   </table>
                 </table>
+                <div>
+                  <nav aria-label="..." style="display: flex;
+                  align-items: center;
+                  justify-content: center;">
+                      <ul class="pagination" id="phanTrang">
+                          
+                      </ul>
+                  </nav>
+              </div>
               </div>
             </div>
           </div>
@@ -438,10 +447,12 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
     loadData()
-    function loadData() {
+    function loadData(soTrang) {
+      if(soTrang == null) soTrang = 1;
+      phanTrang(soTrang)
       $.ajax({
         type: "GET",
-        url: "https://localhost:44368/api/homeadminapi/danhmuchoadon",
+        url: "https://localhost:44368/api/homeadminapi/danhmuchoadon?page=" + soTrang,
         dataType: "json",
         success: function (data) {
           var html = '';
@@ -452,7 +463,7 @@
               '<td>' + (item.PhuongThucThanhToan == 0 ? '<p>Shipping Code</p>' : '<p>Banking</p>') + '</td>' +
               '<td>' + item.ghiChu + '</td>' +
               '<td>' + item.ngayHoaDon + '</td>' +
-              '<td>' + item.tongTienHd + '</td>' +
+              '<td>' + item.tongTienHd.toLocaleString() + '</td>' +
               '<td>' + (item.status == 0 ? '<p>Chờ xác nhận</p>' : item.status == 1 ? '<p>Đang giao</p>' : item.status == 2 ? '<p>Thành công</p>' : '<p>Đã hủy</p>')
               + '</td>' +
               '<td style="white-space: nowrap; witdh:100px">' +
@@ -510,6 +521,17 @@
           console.log(textStatus, errorThrown);
         }
       });
+    }
+
+    function phanTrang(soTrang) {
+        if(soTrang == null) soTrang = 1;
+        let str = '';
+        if(soTrang > 1) str += `<li class="page-item"><button class="page-link" onclick="loadData('${soTrang - 1}')"><<</button></li>`
+                            + `<li class="page-item"><button class="page-link" onclick="loadData('${soTrang - 1}')">${soTrang - 1}</button></li>`;
+        str += `<li class="page-item active"><span class="page-link"> ${soTrang} </span></li>`;
+        str += `<li class="page-item"><button class="page-link" onclick="loadData('${parseInt(soTrang) + 1}')"> ${parseInt(soTrang) + 1} </button></li>`
+                + `<li class="page-item"><button class="page-link" onclick="loadData('${parseInt(soTrang) + 1}')">>></button></li>`;
+        $("#phanTrang").html(str);
     }
   </script>
   <!-- Github buttons -->

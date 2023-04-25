@@ -409,7 +409,7 @@
                         <div class="text-center py-4">
                             <a class="h6 text-decoration-none text-truncate" href="">${item.tenSp}</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>${item.giaLonNhat}</h5><h6 class="text-muted ml-2"></h6>
+                                <h5>${item.giaLonNhat.toLocaleString()}</h5><h6 class="text-muted ml-2"></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -446,13 +446,14 @@
                 $.each($("input[name='priceRange[]']:checked"), function () {
                     selectedPrices.push($(this).val());
                 });
-                var data = {
-                    priceRanges: selectedPrices
-                };
+                
+                console.log(selectedPrices);
                 $.ajax({
                     type: "POST",
-                    url: "https://localhost:44368/api/SanPhamAPI/SearchProductsByPriceRange",
-                    data: data,
+                    url: "https://localhost:44368/home/SearchProductsByPriceRange",
+                    data: {
+                        data: JSON.stringify(selectedPrices)
+                    },
                     success: function (response) {
                         // Xử lý kết quả trả về từ API
                         console.log(response);
@@ -474,7 +475,7 @@
                         <div class="text-center py-4">
                             <a class="h6 text-decoration-none text-truncate" href="">${item.tenSp}</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>${item.giaLonNhat}</h5><h6 class="text-muted ml-2"></h6>
+                                <h5>${item.giaLonNhat.toLocaleString()}</h5><h6 class="text-muted ml-2"></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>

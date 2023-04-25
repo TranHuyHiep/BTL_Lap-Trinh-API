@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    
+
     <!-- Topbar Start -->
     <div class="container-fluid">
         <div class="row bg-secondary py-1 px-xl-5">
@@ -51,10 +51,10 @@
                             Account</button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button class="dropdown-item" type="button" onclick="signIn()">Logout</button>
-                            
+
                         </div>
                     </div>
-                    
+
                     <div class="btn-group mx-2">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle"
                             data-toggle="dropdown">USD</button>
@@ -110,14 +110,14 @@
             <div class="col-lg-4 col-6 text-right">
                 <p class="m-0">Customer Service</p>
                 <div class="fb-messengermessageus dropdown-item" messenger_app_id="780840220123234"
-                        page_id="104828195924958" color="blue" size="standard"></div>
-                            </div>
+                    page_id="104828195924958" color="blue" size="standard"></div>
             </div>
         </div>
     </div>
+    </div>
     <!-- Topbar End -->
 
-    
+
     <!-- Navbar Start -->
     <div class="container-fluid bg-dark mb-30">
         <div class="row px-xl-5">
@@ -297,9 +297,16 @@
 
         </div>
     </div>
-    <!-- Products End -->
-
-
+    <div>
+        <nav aria-label="..." style="display: flex;
+        align-items: center;
+        justify-content: center;">
+            <ul class="pagination" id="phanTrang">
+                
+            </ul>
+        </nav>
+    </div>
+    
     <!-- Offer Start -->
     <div class="container-fluid pt-5 pb-3">
         <div class="row px-xl-5">
@@ -478,14 +485,14 @@
 
 
     <script>
-            window.fbAsyncInit = function () {
-                FB.init({
-                    appId: '780840220123234',
-                    xfbml: true,
-                    version: 'v3.3'
-                });
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '780840220123234',
+                xfbml: true,
+                version: 'v3.3'
+            });
         };
-            (function (d, s, id) {
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) { return; }
             js = d.createElement(s); js.id = id;
