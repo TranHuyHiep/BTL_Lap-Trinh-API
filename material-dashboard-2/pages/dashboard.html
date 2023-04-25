@@ -267,7 +267,7 @@
                           Mã Khách hàng
                         </th>
                         <th>
-                          Phương thức thanh toán
+                          Phương thức TT
                         </th>
                         <th>
                           Ghi Chú
@@ -276,9 +276,11 @@
                           Ngày hóa đơn
                         </th>
                         <th>
-                          Tổng tiền hóa đơn
+                          Tổng tiền HĐ
                         </th>
-                        <th></th>
+                        <th>
+                          Trạng thái
+                        </th>
                       </tr>
                     </thead>
                     <tbody id="hoadon">
@@ -438,10 +440,12 @@
             '<td>' + item.ghiChu + '</td>' +
             '<td>' + item.ngayHoaDon + '</td>' +
             '<td>' + item.tongTienHd + '</td>' +
+            '<td>' + (item.status == 0 ? '<p>Chờ xác nhận</p>' : item.status == 1 ? '<p>Đang giao</p>' : item.status == 2 ? '<p>Thành công</p>' : '<p>Đã hủy</p>')
+            + '</td>' +
             '<td>' +
-            '<a href="/SuaSanPham?maSanPham=' + '">Edit</a> |' +
-            '<a href="../pages/notifications.html?mahoadon=' + item.maHoaDon + '">Details</a> |' +
-            '<a href="/XoaSanPham?maSanPham=' + '">Delete</a>' +
+            '<a href="/SuaSanPham?maSanPham=' + '">Xác nhận</a> |' +
+            '<a href="../pages/notifications.html?mahoadon=' + item.maHoaDon + '">Chi tiết</a> |' +
+            '<a href="/XoaSanPham?maSanPham=' + '">Hủy</a>' +
             '</td>' +
             '</tr>';
         });
