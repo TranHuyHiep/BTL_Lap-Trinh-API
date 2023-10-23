@@ -1,0 +1,122 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Camera Shop'1st Viet Nam</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="../Camera/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../Camera/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../Camera/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../Camera/css/style.css" rel="stylesheet">
+    <link href="../Camera/css/StyleSheet.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    @await Html.PartialAsync("_PatialHeader")
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <div class="container-fluid bg-dark mb-30">
+        <div class="row px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
+                    <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
+                    <div class="navbar-nav w-100">
+                        @await Component.InvokeAsync("HangSxMenu")
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <span class="h1 text-uppercase text-dark bg-light px-2">Camera</span>
+                        <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Home</a>
+                            <a class="nav-item nav-link" asp-controller="Home" asp-action="Shop">Shop</a>
+                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                            <div class="nav-item dropdown" active>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
+                                <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
+                                    <a asp-controller="ShoppingCart" asp-action="Index" class="dropdown-item">Shopping Cart</a>
+                                    <a asp-controller="Home" asp-action="HoaDon" class="dropdown-item">Bill</a>
+                                </div>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
+                            <a href="" class="btn px-0">
+                                <i class="fas fa-heart text-primary"></i>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                            </a>
+                            <a class="btn px-0 ml-3" asp-controller="ShoppingCart" asp-action="Index">
+                                <i class="fas fa-shopping-cart text-primary"></i>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+    @RenderBody()
+
+    @await Html.PartialAsync("_PatialFooter")
+    <!-- Footer End -->
+    <!-- Back to Top -->
+
+
+
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="../Camera/lib/easing/easing.min.js"></script>
+    <script src="../Camera/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="../Camera/mail/jqBootstrapValidation.min.js"></script>
+    <script src="../Camera/mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../Camera/js/main.js"></script>
+    <script src="../Camera/js/ShoppingCart.js"></script>
+
+</body>
+
+</html>
+
+
+<div data-visualcompletion="ignore-dynamic" style="padding-left: 8px; padding-right: 8px;"><div class="x1lq5wgf xgqcy7u x30kzoy x9jhf4c x1lliihq"><div class="x6s0dn4 x1q0q8m5 x1qhh985 xu3j5b3 xcfux6l x26u7qi xm0m39n x13fuv20 x972fbf x9f619 x78zum5 x1q0g3np x1iyjqo2 xs83m0k x1qughib xat24cr x11i5rnm x1mh8g0r xdj266r xeuugli x18d9i69 x1sxyh0 xurb0ha xexx8yu x1n2onr6 x1ja2u2z x1gg8mnh"><div class="x78zum5 xdt5ytf xq8finb x1n2onr6 xqcrz7y x1k70j0n xzueoph"><div class=""><a aria-label="Trung Kiên" class="x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1q0g3np x87ps6o x1lku1pv x1a2a7pz xzsf02u x1rg5ohu" href="https://www.facebook.com/aunauuu?__cft__[0]=AZXjLM4zvWxWZ_xv6FZKbtK3Wf5BcNs2sC1gzla1mPF6bqUbr_V1WwcSPi3wTO-37m5iMK8omvjB6dxLHlmwMoY75hTxOyxlyoK9AyqIecQz1dMfWxm95GkOJwmLTxXZHIuQpA96pLvdRcYEIjsqebX2k1yM27F-JEv1ZCAw-WchaA&amp;__tn__=%3C-a]-R" role="link" tabindex="0"><div class="x1rg5ohu x1n2onr6 x3ajldb x1ja2u2z"><svg aria-hidden="true" class="x3ajldb" data-visualcompletion="ignore-dynamic" role="none" style="height: 40px; width: 40px;"><mask id=":r7fg:"><circle cx="20" cy="20" fill="white" r="20"></circle></mask><g mask="url(#:r7fg:)"><image x="0" y="0" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xlink:href="https://scontent.fhan14-3.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p40x40&amp;_nc_cat=1&amp;ccb=1-7&amp;_nc_sid=7206a8&amp;_nc_ohc=4WG6vRsKhfwAX_PadL2&amp;_nc_ht=scontent.fhan14-3.fna&amp;oh=00_AfAsCUJd9i47A7rn_OvRrEbpjk59tWSFtj_sGnOSg399TQ&amp;oe=64663C78" style="height: 40px; width: 40px;"></image><circle class="x1pwv2dq xvlca1e xbh8q5q" cx="20" cy="20" r="20"></circle></g></svg><div class="x1ey2m1c xds687c xg01cxk x47corl x10l6tqk x17qophe x13vifvy x1ebt8du x19991ni x1dhq9h x14yjl9h xudhj91 x18nykt9 xww2gxu" data-visualcompletion="ignore"></div><div class="x14yjl9h xudhj91 x18nykt9 xww2gxu x10l6tqk xhtitgo" data-visualcompletion="ignore" style="bottom: 6px; right: 6px; transform: translate(50%, 50%);"><div class="x4k7w5x x1h91t0o x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1jfb8zj x1beo9mf x3igimt xarpa2k x1n2onr6 x1qrby5j"><div class="x6s0dn4 x1q0q8m5 x1qhh985 xu3j5b3 xcfux6l x14yjl9h xudhj91 x18nykt9 xww2gxu x26u7qi xm0m39n x13fuv20 x972fbf x9f619 x78zum5 xdt5ytf x1iyjqo2 xs83m0k xl56j7k xat24cr x11i5rnm x1mh8g0r xdj266r x2lwn1j xeuugli x6ikm8r x10wlt62 x1n2onr6 x1ja2u2z xs9asl8 x1mpkggp x1t2a60a x123j3cw xd7y6wv x23j0i4"><img class="x1b0d499 xl1xv1r" src="https://www.facebook.com/reaction/image/1635855486666999/?size=16&amp;scale=1" alt="" style="height: 16px; width: 16px;"></div><div class="x1ey2m1c xds687c xg01cxk x47corl x10l6tqk x17qophe x13vifvy x1ebt8du x19991ni x1dhq9h x14yjl9h xudhj91 x18nykt9 xww2gxu" data-visualcompletion="ignore"></div></div></div></div></a></div></div><div class="x6s0dn4 xkh2ocl x1q0q8m5 x1qhh985 xu3j5b3 xcfux6l x26u7qi xm0m39n x13fuv20 x972fbf x9f619 x78zum5 x1q0g3np x1iyjqo2 xs83m0k x1qughib xat24cr x11i5rnm x1mh8g0r xdj266r x2lwn1j xeuugli x18d9i69 x4uap5 xkhd6sd xexx8yu x1n2onr6 x1ja2u2z"><div class="x1q0q8m5 x1qhh985 xu3j5b3 xcfux6l x26u7qi xm0m39n x13fuv20 x972fbf x9f619 x78zum5 x1r8uery x1iyjqo2 xs83m0k x1qughib x11i5rnm x1mh8g0r x2lwn1j xeuugli x4uap5 xkhd6sd x1n2onr6 x1ja2u2z x1qjc9v5 xdt5ytf xat24cr xdj266r x1y1aw1k xwib8y2"><div class=""><div class="x78zum5 xdt5ytf xz62fqu x16ldp7u"><div class="xu06os2 x1ok221b"><span class="x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x3x7a5m x1f6kntn xvq8zen xk50ysn xzsf02u x1yc453h" dir="auto"><div class=" x1rg5ohu"><a class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz xt0b8zv xzsf02u x1s688f" href="https://www.facebook.com/aunauuu?__cft__[0]=AZXjLM4zvWxWZ_xv6FZKbtK3Wf5BcNs2sC1gzla1mPF6bqUbr_V1WwcSPi3wTO-37m5iMK8omvjB6dxLHlmwMoY75hTxOyxlyoK9AyqIecQz1dMfWxm95GkOJwmLTxXZHIuQpA96pLvdRcYEIjsqebX2k1yM27F-JEv1ZCAw-WchaA&amp;__tn__=-a]-R" role="link" tabindex="0">Trung Kiên</a></div></span></div><div class="xu06os2 x1ok221b"><span class="x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x4zkp8e x676frb x1pg5gke x1sibtaa xo1l8bm xi81zsa x1yc453h" dir="auto"><div class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1n2onr6 x87ps6o x1a2a7pz xt0b8zv" role="button" tabindex="0">90 bạn chung</div></span></div></div></div></div><div class="x16n37ib x1n2onr6 x1e56ztr x1xmf6yo xamitd3"><div class="x6s0dn4 x78zum5 x1q0g3np"><div class=""><div aria-label="Nhắn tin" class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x1ypdohk xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x87ps6o x1lku1pv x1a2a7pz x9f619 x3nfvp2 xdt5ytf xl56j7k x1n2onr6 xh8yej3" role="button" tabindex="0"><div class="x1n2onr6 x1ja2u2z x78zum5 x2lah0s xl56j7k x6s0dn4 xozqiw3 x1q0g3np xi112ho x17zwfj4 x585lrc x1403ito x972fbf xcfux6l x1qhh985 xm0m39n x9f619 xn6708d x1ye3gou x1qhmfi1 x1r1pt67"><div class="x6s0dn4 x78zum5 xl56j7k x1608yet xljgi0e x1e0frkt"><div class="x9f619 x1n2onr6 x1ja2u2z x193iq5w xeuugli x6s0dn4 x78zum5 x2lah0s x1fbi1t2 xl8fo4v"><i data-visualcompletion="css-img" class="x1b0d499 xep6ejk" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/yF/r/2F8i6Z3Rte9.png&quot;); background-position: 0px -269px; background-size: auto; width: 16px; height: 16px; background-repeat: no-repeat; display: inline-block;"></i></div><div class="x9f619 x1n2onr6 x1ja2u2z x193iq5w xeuugli x6s0dn4 x78zum5 x2lah0s x1fbi1t2 xl8fo4v"><span class="x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x3x7a5m x1f6kntn xvq8zen x1s688f x1dem4cn" dir="auto"><span class="x1lliihq x6ikm8r x10wlt62 x1n2onr6 xlyipyv xuxw1ft">Nhắn tin</span></span></div></div><div class="x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1ey2m1c xds687c xg01cxk x47corl x10l6tqk x17qophe x13vifvy x1ebt8du x19991ni x1dhq9h" data-visualcompletion="ignore"></div></div></div></div></div></div></div></div></div></div>
